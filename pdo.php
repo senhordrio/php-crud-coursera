@@ -2,7 +2,7 @@
 
 $username = "drio";
 $password = "gg7elSaMclWaoRga";
-$servername = "127.0.0.1";
+$servername = "https://jsjsoncoursera.herokuapp.com/";
 
 try{
     $pdo = new PDO("mysql:host=$servername;port=3306;dbname=resumeDB", $username, $password);

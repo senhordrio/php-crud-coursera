@@ -1,0 +1,12 @@
+html{
+    font-family: "Open Sans"
+}
+
+table, th, td{
+    border: 1px solid black;
+}
+a{
+    font-size: 13px;
+    color: black;
+    cursor: pointer;
+}

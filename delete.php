@@ -2,7 +2,7 @@
 require_once 'pdo.php';
 session_start();
 
-if ( isset($_POST['delete']) && isset($_POST['profile_id']) ) {
+if ( isset($_POST['Delete']) && isset($_POST['profile_id']) ) {
     $sql = "DELETE FROM profile WHERE profile_id = :pid";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(':pid' => $_POST['profile_id']));
@@ -57,7 +57,7 @@ $profile_id = $row['profile_id'];
     <p>Summary:<?= " $su" ?></p>
     <form method="POST">
         <input type="hidden" name="profile_id" value="<?= $row['profile_id'] ?>">
-        <input type="submit" value="Delete" name="delete">
+        <input type="submit" value="Delete" name="Delete">
         <a href="index.php">Cancel</a>
     </form>
 </body>

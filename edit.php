@@ -2,18 +2,18 @@
 require_once 'pdo.php';
 session_start();
 
-if (isset($_POST['fn']) && isset($_POST['ln']) && isset($_POST['em']) && isset($_POST['he']) && isset($_POST['su'])) {
+if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary'])) {
 
     if (
-        strlen($_POST['fn']) < 1 || strlen($_POST['ln']) < 1 || strlen($_POST['em']) < 1 ||
-        strlen($_POST['he']) < 1 || strlen($_POST['su']) < 1
+        strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 ||
+        strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1
     ) {
         $_SESSION['error'] = 'Some field is empty.';
         header("Location: edit.php?profile_id=" . $_POST['profile_id']);
         return;
     };
 
-    if (strpos($_POST['em'], '@') === false) {
+    if (strpos($_POST['email'], '@') === false) {
         $_SESSION['error'] = 'Invalid email!';
         header("Location: edit.php?profile_id=" . $_POST['profile_id']);
         return;
@@ -23,11 +23,11 @@ if (isset($_POST['fn']) && isset($_POST['ln']) && isset($_POST['em']) && isset($
     WHERE profile_id = :pid');
     $stmt->execute(
         array(
-            ':fn' => $_POST['fn'],
-            ':ln' => $_POST['ln'],
-            ':em' => $_POST['em'],
-            ':he' => $_POST['he'],
-            ':su' => $_POST['su'],
+            ':fn' => $_POST['first_name'],
+            ':ln' => $_POST['last_name'],
+            ':em' => $_POST['email'],
+            ':he' => $_POST['headline'],
+            ':su' => $_POST['summary'],
             ':pid' => $_POST['profile_id']
         )
     );
@@ -53,11 +53,11 @@ if ($row === false) {
 
 // Flash pattern
 
-$fn = htmlentities($row['first_name']);
-$ln = htmlentities($row['last_name']);
-$em = htmlentities($row['email']);
-$he = htmlentities($row['headline']);
-$su = htmlentities($row['summary']);
+$first_name = htmlentities($row['first_name']);
+$last_name = htmlentities($row['last_name']);
+$email = htmlentities($row['email']);
+$headline = htmlentities($row['headline']);
+$summary = htmlentities($row['summary']);
 $profile_id = $row['profile_id'];
 
 ?>
@@ -78,18 +78,18 @@ $profile_id = $row['profile_id'];
     }
     ?>
     <form method="POST">
-        <label for="fn">First name:</label>
-        <input id="fn" type="text" name="fn" value="<?= $fn ?>"><br><br>
-        <label for="ln">Last name:</label>
-        <input id="ln" type="text" name="ln" value="<?= $ln ?>"><br><br>
-        <label for="em">Email:</label>
-        <input id="em" type="text" name="em" value="<?= $em ?>"><br><br>
-        <label for="he">Headline:</label>
-        <input id="he" type="text" name="he" value="<?= $he ?>"><br><br>
-        <label for="su">Summary:</label>
-        <input id="su" type="text" name="su" value="<?= $su ?>"><br><br>
+        <label for="first_name">First name:</label>
+        <input id="fn" type="text" name="first_name" value="<?= $first_name ?>"><br><br>
+        <label for="last_name">Last name:</label>
+        <input id="ln" type="text" name="last_name" value="<?= $last_name ?>"><br><br>
+        <label for="email">Email:</label>
+        <input id="em" type="text" name="email" value="<?= $email ?>"><br><br>
+        <label for="headline">Headline:</label>
+        <input id="he" type="text" name="headline" value="<?= $headline ?>"><br><br>
+        <label for="summary">Summary:</label>
+        <input id="su" type="text" name="summary" value="<?= $summary ?>"><br><br>
         <input type="hidden" name="profile_id" value="<?= $profile_id ?>">
-        <input type="submit" onclick="return dataValidate()" value="Edit">
+        <input type="submit" onclick="return dataValidate()" value="Save">
         <a href="index.php">Cancel</a>
     </form>
 </body>

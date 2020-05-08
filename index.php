@@ -51,9 +51,9 @@ $stmt = $pdo->query("SELECT user_id, profile_id, first_name, headline FROM profi
     </table>
     <?php
     if (!isset($_SESSION["user_id"])) {
-        echo '<br><a href="login.php">Log in</a>';
+        echo '<br><a href="login.php">Please log in</a>';
     } else {
-        echo '<br><a href="add.php">Add new</a><br><br>';
+        echo '<br><a href="add.php">Add New Entry</a><br><br>';
         echo '<a href="logout.php">Log out</a>';
     }
     ?>

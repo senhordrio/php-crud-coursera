@@ -1,17 +1,17 @@
 <?php
 require_once 'pdo.php';
 session_start();
-if (isset($_POST['fn']) && isset($_POST['ln']) && isset($_POST['em']) && isset($_POST['he']) && isset($_POST['su'])) {
+if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary'])) {
   if (
-    strlen($_POST['fn']) < 1 || strlen($_POST['ln']) < 1 || strlen($_POST['em']) < 1 ||
-    strlen($_POST['he']) < 1 || strlen($_POST['su']) < 1
+    strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 ||
+    strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1
   ) {
-    $_SESSION['error'] = 'Some field is empty.';
+    $_SESSION['error'] = 'All values are required';
     header("Location: add.php");
     return;
   };
 
-  if (strpos($_POST['em'], '@') === false) {
+  if (strpos($_POST['email'], '@') === false) {
     $_SESSION['error'] = 'Invalid email!';
     header("Location: add.php");
     return;
@@ -21,14 +21,14 @@ if (isset($_POST['fn']) && isset($_POST['ln']) && isset($_POST['em']) && isset($
   $stmt->execute(
     array(
       ':uid' => $_SESSION['user_id'],
-      ':f' => $_POST['fn'],
-      ':l' => $_POST['ln'],
-      ':e' => $_POST['em'],
-      ':h' => $_POST['he'],
-      ':s' => $_POST['su']
+      ':f' => $_POST['first_name'],
+      ':l' => $_POST['last_name'],
+      ':e' => $_POST['email'],
+      ':h' => $_POST['headline'],
+      ':s' => $_POST['summary']
     )
   );
-  $_SESSION['success'] = 'Profile added!';
+  $_SESSION['success'] = 'added';
   header('Location: index.php');
   return;
 }
@@ -57,16 +57,16 @@ if (!isset($_SESSION['user_id'])) {
   }
   ?>
   <form method="POST">
-    <labe for="fn">First name:</labe>
-    <input id="fn" type="text" name="fn"><br><br>
-    <label for="ln">Last name:</label>
-    <input id="ln" type="text" name="ln"><br><br>
-    <label for="em">Email:</label>
-    <input id="em"type="text" name="em"><br><br>
-    <label for="he">Headline:</label>
-    <input id="he" type="text" name="he"><br><br>
-    <label for="su">Summary:</label>
-    <input id="su" type="text" name="su"><br><br>
+    <labe for="first_name">First name:</labe>
+    <input id="fn" type="text" name="first_name"><br><br>
+    <label for="last_name">Last name:</label>
+    <input id="ln" type="text" name="last_name"><br><br>
+    <label for="email">Email:</label>
+    <input id="em"type="text" name="email"><br><br>
+    <label for="headline">Headline:</label>
+    <input id="he" type="text" name="headline"><br><br>
+    <label for="summary">Summary:</label>
+    <input id="su" type="text" name="summary"><br><br>
     <input type="submit" onclick="return dataValidate()" value="Add">
     <a href="index.php">Cancel</a>
   </form>
@@ -80,7 +80,7 @@ if (!isset($_SESSION['user_id'])) {
             var he = document.getElementById('he').value;
             var su = document.getElementById('su').value;
             if(fn == "" || ln == "" || em == "" || he == "" || su == ""){
-                alert("All fields must be filled!");
+                alert("All values are required");
                 header("Location: add.php")
                 return false;
             }

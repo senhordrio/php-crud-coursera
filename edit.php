@@ -8,6 +8,12 @@ if(!isset($_SESSION['user_id'])){
     return;
 }
 
+if(!isset($_REQUEST['profile_id'])){
+    $_SESSION['error'] = "Missing profile_id";
+    header("Location: index.php");
+    return;
+}
+
 $stmt = $pdo->prepare("SELECT * FROM profile where profile_id = :pid AND user_id = :uid");
 $stmt->execute(array(":pid" => $_REQUEST['profile_id'], ':uid' => $_SESSION['user_id']));
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -119,7 +125,7 @@ $profile_id = $row['profile_id'];
         <label for="headline">Headline:</label>
         <input id="he" type="text" name="headline" value="<?= $headline ?>"><br><br>
         <label for="summary">Summary:</label>
-        <textarea id="su" type="text" name="summary" rows="8" value="<?= $summary ?>"></textarea>
+        <input id="su" type="text" name="summary" value="<?= $summary ?>"></input>
         <?php
         $pos = 0;
         echo('<p>Position: <input type="submit" id="addPos" value="+">'."\n");

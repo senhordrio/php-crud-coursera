@@ -103,7 +103,6 @@ if (!isset($_SESSION['user_id'])) {
     <input type="submit" onclick="return dataValidate()" value="Add">
     <a href="index.php">Cancel</a>
   </form>
-</body>
 <script src="jquery-3.5.1.js"></script>
 <script>
   countPos = 0;
@@ -116,11 +115,11 @@ if (!isset($_SESSION['user_id'])) {
       }
       countPos++;
       $('#position_fields').append(
-        '<div id="position' + countPos + '"> \
-        <p>Year: <input type="text" name="year' + countPos + '" value=""/> \
+        '<div id="position'+countPos+'"> \
+        <p>Year: <input type="text" name="year'+countPos+'" value=""/> \
         <input type="button" value="-" \
-        onclick="$(\'#position' + countPos + '\').remove(); return false;"></p> \
-        <textarea name="desc' + countPos + '" rows="8" cols="80"></textarea>\
+        onclick="$(\'#position'+countPos+'\').remove();return false;"></p> \
+        <textarea name="desc'+countPos+'" rows="8" cols="80"></textarea>\
         </div>');
     });
   });
@@ -144,5 +143,5 @@ if (!isset($_SESSION['user_id'])) {
     return false;
   }
 </script>
-
+</body>
 </html>

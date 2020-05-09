@@ -110,12 +110,10 @@ $profile_id = $row['profile_id'];
 <body>
     <h1>Edit registry:</h1>
     <?php
-    if (isset($_SESSION['error'])) {
-        echo '<p style="color:red">' . $_SESSION['error'] . "</p>\n";
-        unset($_SESSION['error']);
-    }
+    flashMessages();
     ?>
-    <form method="POST">
+    <form method="POST" action="edit.php">
+        <input type="hidden" name="profile_id" value="<?=htmlentities($profile_id)?>"/>
         <label for="first_name">First name:</label>
         <input id="fn" type="text" name="first_name" value="<?= $first_name ?>"><br><br>
         <label for="last_name">Last name:</label>
@@ -138,20 +136,18 @@ $profile_id = $row['profile_id'];
             echo('<input type="button" value="-"');
             echo('onclick="$(\'#position'.$pos.'\').remove();return false;">'."\n");
             echo("<p>\n");
-            echo('<textarea name="desc"'.$pos.'" rows="8">'."\n");
+            echo('<textarea name="desc'.$pos.'" rows="8">'."\n");
             echo(htmlentities($position['description'])."\n");
             echo("\n</textarea>\n</div>\n");
         }
         echo("</div></p>\n");
         ?>
-        <input type="hidden" name="profile_id" value="<?= $profile_id ?>">
         <input type="submit" onclick="return dataValidate()" value="Save">
         <a href="index.php">Cancel</a>
     </form>
-</body>
 <script src="jquery-3.5.1.js"></script>
 <script>
-  countPos = 0;
+  countPos = <?= $pos ?>;
   $(document).ready(function() {
     $('#addPos').click(function(event) {
       event.preventDefault();
@@ -161,11 +157,11 @@ $profile_id = $row['profile_id'];
       }
       countPos++;
       $('#position_fields').append(
-        '<div id="position' + countPos + '"> \
-        <p>Year: <input type="text" name="year' + countPos + '" value=""/> \
+        '<div id="position'+countPos+'"> \
+        <p>Year: <input type="text" name="year'+countPos+'" value=""/> \
         <input type="button" value="-" \
-        onclick="$(\'#position' + countPos + '\').remove(); return false;"></p> \
-        <textarea name="desc' + countPos + '" rows="8" cols="80"></textarea>\
+        onclick="$(\'#position'+countPos+'\').remove();return false;"></p> \
+        <textarea name="desc'+countPos+'" rows="8" cols="80"></textarea>\
         </div>');
     });
   });
@@ -183,5 +179,5 @@ $profile_id = $row['profile_id'];
         return true;
     }
 </script>
-
+</body>
 </html>

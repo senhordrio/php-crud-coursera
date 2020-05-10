@@ -17,12 +17,11 @@ $em = htmlentities($row['email']);
 $he = htmlentities($row['headline']);
 $su = htmlentities($row['summary']);
 
+$stmt = $pdo->prepare("SELECT * FROM position WHERE profile_id = :pid");
+$stmt->execute(array("pid" =>$_GET['profile_id']));
 ?>
 
 <html>
-
-
-
 <head>
     <title>Adriano Oliveira Silva</title>
     <link rel="stylesheet" href="style.css">
@@ -38,7 +37,18 @@ $su = htmlentities($row['summary']);
     <p>E-mail:<?= " $em" ?></p>
     <p>Headline:<?= " $he" ?></p>
     <p>Summary:<?= " $su" ?></p>
+    <p>Position:</p>
+    <ul>
+    <?php
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo('<li><span>');
+        echo(htmlentities($row['year']));
+        echo(': ');
+        echo('</span><span>');
+        echo(htmlentities($row['description']));
+        echo('</span></li>');
+    }
+    ?>
+    </ul>
 </body>
-</body>
-
 </html>

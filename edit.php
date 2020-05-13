@@ -35,6 +35,13 @@ if (
         return;
     }
 
+    $msg = validateEdu();
+    if (is_string($msg)) {
+        $_SESSION['error'] = $msg;
+        header("Location: edit.php?profile_id=" . $_REQUEST['profile_id']);
+        return;
+    }
+
     $msg = validatePos();
     if (is_string($msg)) {
         $_SESSION['error'] = $msg;
@@ -160,7 +167,7 @@ $profile_id = $row['profile_id'];
     <script src="jquery-ui.js"></script>
     <script>
         countPos = <?= $pos ?>;
-        countEdu = <? $countEdu ?>;
+        countEdu = <?= $countEdu ?>;
 
         $(document).ready(function() {
             $('#addPos').click(function(event) {

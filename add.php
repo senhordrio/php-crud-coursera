@@ -17,6 +17,13 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
     return;
   }
 
+  $msg = validateEdu();
+  if (is_string($msg)) {
+      $_SESSION['error'] = $msg;
+      header("Location: add.php");
+      return;
+  }
+
   $msg = validatePos();
   if (is_string($msg)) {
     $_SESSION['error'] = $msg;

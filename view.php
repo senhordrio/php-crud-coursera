@@ -19,6 +19,10 @@ $su = htmlentities($row['summary']);
 
 $stmt = $pdo->prepare("SELECT * FROM position WHERE profile_id = :pid");
 $stmt->execute(array("pid" =>$_GET['profile_id']));
+
+$stmt1 = $pdo->prepare("SELECT education.year, institution.name FROM education INNER JOIN institution
+ON institution.institution_id=education.institution_id WHERE profile_id = :pid");
+$stmt1->execute(array("pid" =>$_GET['profile_id']));
 ?>
 
 <html>
@@ -37,6 +41,19 @@ $stmt->execute(array("pid" =>$_GET['profile_id']));
     <p>E-mail:<?= " $em" ?></p>
     <p>Headline:<?= " $he" ?></p>
     <p>Summary:<?= " $su" ?></p>
+    <p>Education:</p>
+    <ul>
+    <?php
+    while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+        echo('<li><span>');
+        echo(htmlentities($row['year']));
+        echo(': ');
+        echo('</span><span>');
+        echo(htmlentities($row['name']));
+        echo('</span></li>');
+    }
+    ?>
+    </ul>
     <p>Position:</p>
     <ul>
     <?php

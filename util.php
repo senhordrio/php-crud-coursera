@@ -23,6 +23,26 @@ function validateProfile()
     return true;
 }
 
+function validateEdu()
+{
+    for ($i = 1; $i <= 9; $i++) {
+        if (!isset($_POST['edu_year' . $i])) continue;
+        if (!isset($_POST['edu_school' . $i])) continue;
+
+        $year = $_POST['edu_year' . $i];
+        $school = $_POST['edu_school' . $i];
+
+        if (strlen($year) == 0 || strlen($school) == 0) {
+            return "All fields are required";
+        }
+
+        if (!is_numeric($year)) {
+            return "Education year must be numeric";
+        }
+    }
+    return true;
+}
+
 function validatePos()
 {
     for ($i = 1; $i <= 9; $i++) {

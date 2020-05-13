@@ -1,5 +1,5 @@
 <?php
-include_once('../config.php');
+
 if(!isset($_GET['term'])){
     die('Missing required parameter');
 }
@@ -18,7 +18,7 @@ require_once 'pdo.php';
 
 header("Content-type: aplication/json; charset=utf-8");
 
-$term = $_GET['term'];
+$term = $_REQUEST['term'];
 error_log("Looking up typehead term=".$term);
 
 $stmt = $pdo->prepare('SELECT name FROM institution WHERE name LIKE :prefix');
